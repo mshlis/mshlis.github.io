@@ -13,10 +13,10 @@ Here is an image of "shaggy" old me :)
 
 ### (Rand) Project 1: [ANNagram](https://mshlis.github.io/ANNagram/)
 For my first project in this blog I write from scratch a pointer network with a transformer backbone. For smaller words its a silly idea, because exhaustive checking would be quick and perfectly accurate, but this grows in a combinatoric fashion. On the other hand a transformer-based encoder/decoder will grow quadratically with input length.  
-`erif --> fire || sichpys --> physics || nfuctnio --> function`
+`erif --> fire || sichpys --> physics || nfuctnio --> function`       
 **Keywords:** NLP, Transformer, Pointer-Networks, Anagrams
 
 ### (Research) Project 2: [Intermediate Loss Sampling](https://mshlis.github.io/ILSampling)  
-For this project I introduce a new sampling technique that does not target its forward pass, but defines the problem as a multistep optimization one. Doing this allows for efficient calculation of gradients that utilizes directly the loss' gradient. This work solves a similar problem as Gumbel Softmax but doesnt have the same draw-integrity/gradient smoothness tradeoff. I show this with a toy example that on a problem that soft-sampling has an advantage, my sampling procedure actually performs just as well if not better. I hope to add more soon. Other positives of this method include that it can extend to non-categorical random variables as well, even ones without a reparametrization trick, assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.
+For this project I introduce a new sampling technique that does not target its forward pass, but defines the problem as a multistep optimization one. Doing this allows for efficient calculation of gradients that utilizes directly the loss' gradient. This work solves a similar problem as Gumbel Softmax but doesnt have the same draw-integrity/gradient smoothness tradeoff. I show this with a toy example that on a problem that soft-sampling has an advantage, my sampling procedure actually performs just as well if not better. I hope to add more soon. Other positives of this method include that it can extend to non-categorical random variables as well, even ones without a reparametrization trick, assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.          
 **Keywords:** Differentiable Sampling
 
