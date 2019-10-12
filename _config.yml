@@ -2,7 +2,7 @@ theme: jekyll-theme-cayman
 
 comments:
  provider: "facebook"
-   staticman:
+   facebook:
  allowedFields          : ['name', 'email', 'url', 'message']
  branch                 : # "master", "gh-pages"
  commitMessage          : "New comment."
