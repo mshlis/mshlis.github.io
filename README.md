@@ -34,9 +34,22 @@ For this problem, were working on a set with no notion of time or order (on the 
 **Possible extensions for later:** 
 - we can design this to work with keys that can be used multiple times (example: `kntig --> knitting`
 - we can add in spaces to actually learn to make phrases (example: `nrttgiarhee --> the tiger ran`)
+  
+&nbsp;
 
+&nbsp;
 
+&nbsp;
+
+&nbsp;
+  
 ### Project 2 (Research): [Intermediate Loss Sampling](https://mshlis.github.io/ILSampling)  
-**Keywords:** Differentiable Sampling
-For this project I introduce a new sampling technique that does not target its forward pass, but defines the problem as a multistep optimization one. Doing this allows for efficient calculation of gradients that utilizes directly the loss' gradient. This work solves a similar problem as Gumbel Softmax but doesnt have the same draw-integrity/gradient smoothness tradeoff. I show this with a toy example that on a problem that soft-sampling has an advantage, my sampling procedure actually performs just as well if not better. I hope to add more soon. Other positives of this method include that it can extend to non-categorical random variables as well, even ones without a reparametrization trick, assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.          
+**Keywords:** Differentiable Sampling  
+For this project I introduce a new sampling technique that does not impact the forward pass but defines the problem as a multistep optimization one. Doing this allows for efficient calculation of gradients that utilizes directly the loss' gradient. This work solves a similar problem as Gumbel Softmax. Different from that approach this does not have the same draw-integrity/gradient smoothness tradeoff. I show this with a toy example on a problem where soft-sampling would actually be advantagous. Intermediate Loss Sampling performs just as well if not better. The algorithms construction is as so:  
 
+<p align="center">
+  <img src="./ILS.png" width="650px" height="250px">
+</p> 
+  
+I hope to add more test cases soon. Other positives of this method include that it can extend to non-categorical random variables as well, even ones without a reparametrization trick, assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.     
+  
