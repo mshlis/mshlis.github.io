@@ -7,7 +7,7 @@ I graduated from UMass Amherst with a bachelors in Computer Engineering and Appl
 Note that I will be seperating repos/pages that are more random/fun-only and more research focused into the tags **(Rand)** and **(Research)** respectively.
 
 <p align="center">
-  <img src="./im_shaggy.png">
+  <img src="./images/im_shaggy.png">
 </p>  
 Here is an image of "shaggy" old me :)
 
@@ -18,7 +18,7 @@ Here is an image of "shaggy" old me :)
 For this project I introduce a new sampling technique that does not impact the forward pass but defines the problem as a multistep optimization one. Doing this allows for efficient calculation of gradients that utilize directly the loss' gradient. This work aims to solve a similar problem as Gumbel Softmax. Different from that approach this does not have the same draw-integrity/gradient smoothness tradeoff. I show this with a toy example on a problem where soft-sampling would actually be advantagous. Intermediate Loss Sampling performs just as well if not better. The algorithms construction is as so:  
 
 <p align="center">
-  <img src="./ILS.png" width="650px" height="250px">
+  <img src="./images/ILS.png" width="650px" height="250px">
 </p> 
   
 I hope to add more test cases soon. Other positives of this method include that it can extend to non-categorical random variables assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.     
