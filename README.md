@@ -11,7 +11,7 @@ Note that I will be seperating repos/pages that are more random/fun-only and mor
 </p>  
 Here is an image of "shaggy" old me :)
 
-[Project 1]({% post_url 2019-10-06-ANNagram %})
+[Project 1]({% link _posts/2019-10-06-ANNagram.md %})
   
 ### Project 2 (Research): [Intermediate Loss Sampling](https://mshlis.github.io/ILSampling)  
 **Keywords:** Differentiable Sampling  
