@@ -39,8 +39,8 @@ Looking at these, we see the focal-loss is a masked version of adaptive weightin
 Even though stop_gradient makes it not easily comparable in the loss space, we can integrate its gradient to see its effective equivalent. For values of $$\gamma$$ that arent integers, the integral becomes alot more complicated, so for ease lets just look at the integer case
 
 \begin{align}
-    L(p) &= \int_{z=1}^p -\frac{(1-z)^\gamma}{z} dz \\  
-    &= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i}{i} \\  
+    L(p_) &= \int_{z=1}^p -\frac{(1-z)^\gamma}{z} dz   
+    &= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i}{i}   
 \end{align}  
 
 Note that the bottom bound of the integral is arbitrary, because it only effects the constant, but since we set $$FGL(1)=0$$ from the stop_gradient formulation, I use $$z=1$$ to keep it consistent. Now plotting these we see the following  
