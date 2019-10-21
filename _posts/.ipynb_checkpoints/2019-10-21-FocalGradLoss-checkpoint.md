@@ -22,13 +22,16 @@ $$FGL(p) \propto - StopGradient((1-p)^\gamma) \ log(p)$$
 
 ### Comparing the objective functions  
 Its hard to understand it comparitively with the $$StopGradient$$ function, so first lets look at this gradients  
-\begin{align}
-\dot{FL(p)} &= - \frac{(1-p)^\gamma }{p} + \gamma (1-p)^{\gamma - 1} \ log(p) \\  
-&= -(1-p)^\gamma \ \dot{CE(p)} + \gamma (1-p)^{\gamma - 1} \ log(p) \\  
-&= -(1-p)^\gamma \ \dot{CE(p)} + R(p) \\  
-\dot{FGL(p)} &= - \frac{(1-p)^\gamma }{p} \\  
-&= -(1-p)^\gamma \ \dot{CE(p)}  
-\end{align}
+
+$$
+\begin{aligned}
+    \dot{FL(p)} &= - \frac{(1-p)^\gamma }{p} + \gamma (1-p)^{\gamma - 1} \ log(p)\\
+    &= -(1-p)^\gamma \ \dot{CE(p)} + \gamma (1-p)^{\gamma - 1} \ log(p)\\
+    &= -(1-p)^\gamma \ \dot{CE(p)} + R(p) \\
+    \dot{FGL(p)} &= - \frac{(1-p)^\gamma }{p} \\
+    &= -(1-p)^\gamma \ \dot{CE(p)}  \
+\end{aligned}
+$$
 
 Looking at these, we see the focal-loss is a masked version of adaptive weighting plus a residual, $$R(p)$$. This is the differentiating factor in the two appraoches. We can rewrite the residual as $$R(p) = -\gamma * FL_{\gamma -1}(p)$$. It is difficult to say what this does in the optimization perspective, but in terms of sheer magnitude it will always increase the gradient (because the gradient is always negative), moreso if a loss variant is high. This is difficult to describe intuitively but it may be be seen as an additive adaptive bias. This actually increases the spread if you do the math out which may be seen as a benefit but difficult to say for certain, which is why I perform this experiment.  
 
@@ -38,10 +41,12 @@ Looking at these, we see the focal-loss is a masked version of adaptive weightin
 
 Even though stop_gradient makes it not easily comparable in the loss space, we can integrate its gradient to see its effective equivalent. For values of $$\gamma$$ that arent integers, the integral becomes alot more complicated, so for ease lets just look at the integer case
 
-\begin{align}
-    L(p_) &= \int_{z=1}^p -\frac{(1-z)^\gamma}{z} dz   
-    &= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i}{i}   
-\end{align}  
+$$
+\begin{aligned}
+    L(p) &= \int_{z=1}^p -\frac{(1-z)^\gamma}{z} dz\\
+    &= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i}{i} \
+\end{aligned}  
+$$
 
 Note that the bottom bound of the integral is arbitrary, because it only effects the constant, but since we set $$FGL(1)=0$$ from the stop_gradient formulation, I use $$z=1$$ to keep it consistent. Now plotting these we see the following  
 
