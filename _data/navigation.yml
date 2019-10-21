@@ -1,9 +1,9 @@
 # main links
 main:
   - title: "About Me"
-    url: /_pages/about.md
-  # - title: "About"
-  #   url: https://mmistakes.github.io/minimal-mistakes/about/
+    url: /_pages/about
+  - title: "About"
+     url: /about #https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"
