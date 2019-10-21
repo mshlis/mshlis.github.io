@@ -108,7 +108,7 @@ analytics:
 # Site Author
 author:
   name             : "Michael Shliselberg"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/images/other/faceshot.png"
   bio              : "Mikes ML Blog"
   location         : "Boston, MA"
   email            :
