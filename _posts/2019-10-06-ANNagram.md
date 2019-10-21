@@ -3,10 +3,9 @@ layout: post
 author: Michael Shliselberg
 date: 2019-10-06
 excerpt_separator: <!--more-->
-title: "ANNagram"
+title: "ANNagraml"
 ---
 
-### ANNagram
 For my first project in this blog I write from scratch a pointer network with a transformer backbone. For smaller inputs its a silly idea because exhaustive checking would be quick and accurate. That approach though would in a combinatoric fashion. On the other hand a transformer-based encoder/decoder will grow quadratically with input length. Granted there is still optimizations we could use in a deterministic search scheme, but what fun would that be? 
 `erif --> fire || sichpys --> physics || nfuctnio --> function`  
 
@@ -31,7 +30,5 @@ For this problem, were working on a set with no notion of time or order (on the 
 **Possible extensions for later:** 
 - we can design this to work with keys that can be used multiple times (example: `kntig --> knitting`
 - we can add in spaces to actually learn to make phrases (example: `nrttgiarhee --> the tiger ran`)  
-
+  
 Click [here](https://github.com/mshlis/ANNagram) to see the Repo
-
-
