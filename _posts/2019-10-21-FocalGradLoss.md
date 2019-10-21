@@ -3,6 +3,7 @@ author: Michael Shliselberg
 date: 2019-10-20
 excerpt_separator: <!--more-->
 title: "(Res) Focal Gradient Loss"
+mathjax: "true"
 ---  
 
 In this post I am trying to raise consideration to the fact that many in the field of deep learning are splot into two mindsets: optimization and architecture. These two go hand and hand but in many cases are discussed almost modularly. I dont want to say this is a generality because alot of work does look into remedying common pitfalls like gradient vanishing/exploding or adding normalizations to smooth the loss landscape but alot of the time, these are used without the understanding or intuition (given that this is still a work in progress thats completely understandable). One specific case of this I feel is with focal loss (I have used Retinanet alot and so I thought id try to do my own experiment and hence this blog post)  
