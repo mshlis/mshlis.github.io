@@ -2,8 +2,8 @@
 main:
   - title: "About Me"
     url: /about/
-  - title: "Hello World"
-    url: /helloworld/
+  #- title: "Hello World"
+  #  url: /helloworld/
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"
