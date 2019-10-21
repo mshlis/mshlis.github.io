@@ -1,5 +1,4 @@
 ---
-layout: post
 author: Michael Shliselberg
 date: 2019-10-14
 excerpt_separator: <!--more-->
