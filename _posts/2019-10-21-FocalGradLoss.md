@@ -44,7 +44,7 @@ Even though stop_gradient makes it not easily comparable in the loss space, we c
 $$
 \begin{aligned}
     L(p) &= \int_{z=1}^p -\frac{(1-z)^\gamma}{z} dz\\
-    &= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i}{i} \
+    &= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i - (-1)^i}{i} \
 \end{aligned}  
 $$
 
