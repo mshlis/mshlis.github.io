@@ -5,7 +5,6 @@ excerpt_separator: <!--more-->
 title: "Intermediate Loss Sampling"
 ---
 
-### Intermediate Loss Sampling  
 I introduce a new sampling technique that does not impact the forward pass but defines the problem as a multistep optimization one. Doing this allows for efficient calculation of gradients that utilize directly the loss' gradient. This work aims to solve a similar problem as Gumbel Softmax. Different from that approach this does not have the same draw-integrity/gradient smoothness tradeoff. 
 
 <!--more-->
