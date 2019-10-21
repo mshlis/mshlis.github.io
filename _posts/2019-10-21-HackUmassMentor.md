@@ -23,7 +23,7 @@ Unfortunately there was over 850 participants and not nearly as many mentors. So
 Over 50% of the questions I ended up with regarded microcontrollers. During my degree in computer engineering I was no stranger to working with microcontrollers but its been a while and it definitely was not my expertise. **So how can I help a group of students if I dont know the answer myself?** Luckily accross many domains alot of the same debugging procedures apply. These include the usual suspects  
 
  * Is it software? You have a debugger?
-     - No debugger means use print statements  
+     - No debugger means use print statements (or get a debugger if possible) 
      - Sometimes print statements may just be easier (I know this is sacriledge to say, but its case to case in my opinion) 
      - Check versioning 
      - Test components seperately if possible with drivers/stubs (this may be expensive given the time frame, but sometimes you can build these as you go)
