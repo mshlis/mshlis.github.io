@@ -2,6 +2,7 @@
 author: Michael Shliselberg
 date: 2019-10-21
 tags: [hackathon, personal]
+comments: true
 excerpt: "This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that are helpful in a variety of scenarios"
 title: "(Pers) Hack Umass Mentor"
 ---

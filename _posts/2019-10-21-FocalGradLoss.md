@@ -2,6 +2,7 @@
 author: Michael Shliselberg
 date: 2019-10-20
 tags: [optimization, object detection, research]
+comments: true
 excerpt: "In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the gradient level rather than at the objective function level"
 mathjax: "true"
 title: "(Res) Focal Gradient Loss"
