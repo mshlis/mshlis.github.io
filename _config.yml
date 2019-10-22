@@ -117,7 +117,7 @@ author:
       icon: "fas fa-fw fa-envelope-square"
       url:  mailto:mishliselberg@gmail.com
     - label: "github"
-      icon: "fas fa-fw fa-link"
+      icon: "fas fa-fw fa-github"
       url: "https://github.com/mshlis"
 
 # Site Footer
