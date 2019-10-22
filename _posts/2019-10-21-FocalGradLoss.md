@@ -2,8 +2,9 @@
 author: Michael Shliselberg
 date: 2019-10-20
 tags: [optimization, object detection, research]
-excerpt: "In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the objective level rather than at the objective function level"
+excerpt: "In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the gradient level rather than at the objective function level"
 mathjax: "true"
+title: "(Res) Focal Gradient Loss"
 ---   
 
 Retinanet is a near state-of-the-art object detector that using a simple adaptive weighting scheme, helps bridge some of the gap between one and two stage object detectors by dealing with inherent class imbalance from the large background set constructed by the anchoring process. Specifically they use Focal Loss  
