@@ -1,14 +1,13 @@
 ---
 author: Michael Shliselberg
 date: 2019-10-06
-excerpt_separator: <!--more-->
+tags: [transformer, pointer network, fun]
+excerpt: "ANNagram is a neural network to take a set of letters and output a possible word. I use a pointer network with a transformer backbone for this task. In the post I delve into both what each of those architectures are and why I chose them."
 title: "(Rand) ANNagram"
 ---
 
 For my first project in this blog I write from scratch a pointer network with a transformer backbone. For smaller inputs its a silly idea because exhaustive checking would be quick and accurate. That approach though would in a combinatoric fashion. On the other hand a transformer-based encoder/decoder will grow quadratically with input length. Granted there is still optimizations we could use in a deterministic search scheme, but what fun would that be?   
 `erif --> fire || sichpys --> physics || nfuctnio --> function`  
-
-<!--more-->
 
 **What are pointer nets?** Pointer Nets came out several years back, in attempts to setup a simplistic framework for varied length codomains. For a rearrangement problem like anagrams this is sensical approach given that different words have different sizes. These models extend encoder-decoder models, specifically the intial paper uses the seq2seq architecture.
 
