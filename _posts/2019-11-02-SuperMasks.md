@@ -21,7 +21,7 @@ So how do we solve for this mask $$M$$? Its a discrete parameter, so normal back
 One question the supermask paper left me with is, *how good is it as an initialization?* Lottery tickets show quicker training with slightly stronger performance than the original. Does this still hold up? So lets do some preliminary experimentation. I look into mnist and cifar10, specifically using Wide Resnet 28. I modify the implementation from keras-contrib to allow for learned masking of the convolution and dense layers. For experiments, I use a batch size of 128 and a learning rate of .01 for training both the mask-only and weight-only setups for 30 epochs. Also for all training sessions we use random flips, translations and rotations for data augmentation. I then also take the best masked version, freeze the mask, unfreeze the weights and train up to 30 epochs as well. Note that for when I fine tune the supermasked model I use a reduce learning rate of 1e-5 because in practice ive noticed empricially the supermask to be extremely close to the local minimum, and any larger sized jumps almost entirely wiped out the boost of utilizing the super mask.  
 
 <p align="center">
-  <img src="images/SuperMask/mnist_training.png">
+  <img src="/images/SuperMask/mnist_training.png">
   <br><b>MNIST Training</b>
 </p>  
 
