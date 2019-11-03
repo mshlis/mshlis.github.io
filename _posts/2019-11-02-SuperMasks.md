@@ -21,24 +21,24 @@ So how do we solve for this mask $M$? Its a discrete parameter, so normal backpr
 One question the supermask paper left me with is, *how good is it as an initialization?* Lottery tickets show quicker training with slightly stronger performance than the original. Does this still hold up? So lets do some preliminary experimentation. I look into mnist and cifar10, specifically using Wide Resnet 28. I modify the implementation from keras-contrib to allow for learned masking of the convolution and dense layers. For experiments, I use a batch size of 128 and a learning rate of .01 for training both the mask-only and weight-only setups for 30 epochs. Also for all training sessions we use random flips, translations and rotations for data augmentation. I then also take the best masked version, freeze the mask, unfreeze the weights and train up to 30 epochs as well. Note that for when I fine tune the supermasked model I use a reduce learning rate of 1e-5 because in practice ive noticed empricially the supermask to be extremely close to the local minimum, and any larger sized jumps almost entirely wiped out the boost of utilizing the super mask.  
 
 <p align="center">
-  <img src="mshlis.github.io/images/SuperMask/mnist_training.png">
+  <img src="images/SuperMask/mnist_training.png">
   <br><b>MNIST Training</b>
 </p>  
 
 <p align="center">
-  <img src="mshlis.github.io/images/SuperMask/cifar10_training.png">
+  <img src="/images/SuperMask/cifar10_training.png">
   <br><b>Cifar10 Training</b>
 </p>  
 
 As you can see in the above two figures, mnist supermasks achieve similar results with equal training times as the normal regime. In this case, I do not see much improvement from using it as an initialization, but this is probably because they all converge to similar minima quickly. Cifar10 on the other hand, we see equal training from both schemes for most of the way but then using the masked variation as an initialization we see a large jump in accuracy. This is really interesting to see. In the initial paper, on Cifar 10 they showed good results, but they did not do as well as the conv nets (except for the small model used for mnist), but here on a deep competetive model, we actually see sheer masking can do wonders. Moreso, starting from the masked initialization leads to a decent boost (the green lines in the cifar10 training figure). So lets see what else we can learn from these experiments.  
 
 <p align="center">
-  <img src="mshlis.github.io/images/SuperMask/mnist_percent_vs_nparams.png">
+  <img src="/images/SuperMask/mnist_percent_vs_nparams.png">
   <br><b>MNIST mask utilization</b>
 </p>  
 
 <p align="center">
-  <img src="mshlis.github.io/images/SuperMask/cifar10_percent_vs_nparams.png">
+  <img src="/images/SuperMask/cifar10_percent_vs_nparams.png">
   <br><b>Cifar10 mask utilization</b>
 </p>   
 
