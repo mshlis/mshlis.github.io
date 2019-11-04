@@ -7,10 +7,10 @@ excerpt: "I propose a novel sampling approach, leveraging an intermediate loss f
 title: "(Res) Intermediate Loss Sampling"
 ---
 
-I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. There exists a long history of using policy gradient techniques where only the policy network gradients are utilized, but in the last couple of years approaches like the Gumbel Softmax has surfaced. Gumbel Softmax attempts to model categorical variables through a reparametrization trick and uses softmax to approximate the argmax operator, which in result is completely differentiable. The gumbell softmax is parametrized by a temperature hyperparameter, T. at T=0, this approximation is equivalent to a draw from the categorical distribution but the gradient is undefined. As T increases, the derivative is more defined, but the sample becomes more and more smooth. This give and take is the primary issue with this approach.   
+I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. There exists a long history of using policy gradient techniques where only the policy network gradients are utilized, but in the last couple of years approaches like the Gumbel Softmax has surfaced. Gumbel Softmax attempts to model categorical variables through a reparametrization trick and uses softmax to approximate the argmax operator, which in result is completely differentiable. The gumbell softmax is parametrized by a temperature hyperparameter, $$T$$. at $$T=0$$, this approximation is equivalent to a draw from the categorical distribution but the gradient is undefined. As $$T$$ increases, the derivative is more defined, but the sample becomes more and more smooth. This give and take is the primary issue with this approach.   
 
 ### Construction
-As a forward pass, it is simply the draw itself with no approximations. For a backpass, we define an intermediate loss function KL(pi_D || pi) where pi_D is a single SGD step from solving which distribution best approximates our end objective.
+As a forward pass, it is simply the draw itself with no approximations. For a backpass, we define an intermediate loss function $$KL(\pi_D || \pi)$$ where $$\pi_D$$ is a single SGD step from solving which distribution best approximates our end objective. Note that this takes advantage that a categorical draw in one-hot form is visually equivalent to a delta function. Due to that, all it would require is some function $$h$$ that maps real vectors onto some probability simplex such that $$h(z) = z$$. The actual algorithm then follows the description below
 
 <p align="center">
   <img src="/images/ILS/ILS.png" width="650px" height="250px">
@@ -19,8 +19,11 @@ As a forward pass, it is simply the draw itself with no approximations. For a ba
 
 ### Toy Problems
 #### Toy Example 1:
-I show the efficacy of the approach with a toy example where soft-sampling would actually be advantagous. Intermediate Loss Sampling actuaally performs just as well if not better. 
-Given a random discrete categorical distribution I solve for minimizing Expectation(KL(pi_true||pi_model)) by only having access to singular draws at the time. Given that KL divergence is greater than 0 I show this is a suitable test by showing its an upper bound of our true object and creating a squeeze-based optimization problem. The simple proof:  
+I show the efficacy of the approach with a toy example where soft-sampling would actually be advantagous. Intermediate Loss Sampling ends up performing just as well if not better. 
+
+Given a random discrete categorical distribution I solve for minimizing $$\mathcal{E}[KL(\pi_{true}||\pi_{model})]$$ by only having access to singular draws at the time. Given that KL divergence is greater than 0 I show this is a suitable test by showing its an upper bound of our true object and creating a squeeze-based optimization problem.  
+
+The simple proof:  
 
 <p align="center">
   <img src="/images/ILS/ex1_0.png" height="250px" width="350px">
