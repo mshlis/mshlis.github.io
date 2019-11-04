@@ -20,9 +20,7 @@ As a forward pass, it is simply the draw itself with no approximations. For a ba
 
 ### Toy Problems
 #### Toy Example 1:
-I show the efficacy of the approach with a toy example where soft-sampling would actually be advantagous. Intermediate Loss Sampling ends up performing just as well if not better.  
-
-Given a random discrete categorical distribution I solve for minimizing $$\mathcal{E}[KL(\pi_{true} || \pi_{model})]$$ by only having access to singular draws at the time. Given that KL divergence is greater than 0 I show this is a suitable test by showing its an upper bound of our true object and creating a squeeze-based optimization problem.  
+I show the efficacy of the approach with a toy example where soft-sampling would actually be advantagous. Intermediate Loss Sampling ends up performing just as well if not better. Given a random discrete categorical distribution I solve for minimizing $$\mathbb{E}[KL(\pi_{true} || \pi_{model})]$$ by only having access to singular draws at the time. Given that KL divergence is greater than 0, I show this is a suitable test by showing its an upper bound of our true object and creating a squeeze-based optimization problem.  
 
 The simple proof:  
 
