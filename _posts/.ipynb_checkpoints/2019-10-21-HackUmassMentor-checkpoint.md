@@ -20,7 +20,8 @@ Most reading this probably already know what a hackathon is but just in case I w
 
 #### Hack Umass
 I was a mentor. This just includes being available for groups that have questions or need any other form of help. The group of mentors included a diverse set of volunteers with skills spanning a variety of realms of hardware and software.  
-Unfortunately there was over 850 participants and not nearly as many mentors. So sometimes you're left with groups requiring assistance in a domain you dont know much about. This is what I want to focus on.    
+Unfortunately there was over 850 participants and not nearly as many mentors. So sometimes you're left with groups requiring assistance in a domain you dont know much about. This is what I want to focus on.  
+
 Over 50% of the questions I ended up with regarded microcontrollers. During my degree in computer engineering I was no stranger to working with microcontrollers but its been a while and it definitely was not my expertise. **So how can I help a group of students if I dont know the answer myself?** Luckily accross many domains alot of the same debugging procedures apply. These include the usual suspects  
 
  * Is it software? You have a debugger?
@@ -46,6 +47,7 @@ Over 50% of the questions I ended up with regarded microcontrollers. During my d
      - Check components one by one if possible (drivers/stubs, voltmeter, ampmeter, replace the part, etc..)  
      
 These are just a handful of paths, but alot of the time its adaptive. Errors can by tricky and sometimes multi faceted, so it is case by case but alot of the time this pseudo-road map will get you far.   
-Also as a mentor, sometimes adding a new perspective adds something. Im sure everyone has done this: you begin a group project and everyone has their own ideas, but eventually you converge on a concept and a path but once there, you all are so focused on that, that you arent pay attention to some obvious avenues-- same is true for any form of group based problem solving.  
 
-Overall it was a great weekend. I got my chance to goto pita pocket (best restaurant in all of amherst with greatest falafel on this side of the planet) and saw my friends while meeting a ton of awesome people. Seeing so many people working on such amazing projects is always inspiring and always gets you revved up! It was a wonderful experience and I hope to be there again next year.
+Also as a mentor, sometimes adding a new perspective adds something. Im sure everyone has done this: you begin a group project and everyone has their own ideas, but eventually you converge on a concept and a path but once there, you all are so focused on that, that you dont pay attention to some obvious mistakes/solutions-- same is true for any form of group based problem solving.  
+
+Overall it was a great weekend. I got a chance to goto pita pocket (best restaurant in all of amherst with greatest falafel on this side of the planet) and saw my friends while meeting a ton of awesome people. Seeing so many people working on such amazing projects is always inspiring and always gets you revved up! It was a wonderful experience and I hope to be there again next year.

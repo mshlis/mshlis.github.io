@@ -5,7 +5,7 @@ tags: [optimization, object detection, research]
 comments: true
 excerpt: "In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the gradient level rather than at the objective function level"
 mathjax: "true"
-title: "(Res) Focal Gradient Loss"
+title: "(Res) Focal Gradient Loss: Are we looking at focal loss correctly?"
 ---   
 
 Retinanet is a near state-of-the-art object detector that using a simple adaptive weighting scheme, helps bridge some of the gap between one and two stage object detectors by dealing with inherent class imbalance from the large background set constructed by the anchoring process. Specifically they use Focal Loss  
@@ -14,12 +14,12 @@ $$FL(p) \propto - (1-p)^\gamma log(p)$$
 
 The usage of $$(1-p)^\gamma$$ down weights the categorical cross entropy loss along with how high $$p$$ is. This is parameterized by $$\gamma$$, where the higher it is, the greater the down weighting is. In their paper they make it clear this choice of adaptive weighting is arbitrary and could be replaced with other schemes.  
 
-The question I pose with this, is does this accomplish their goal? (I asked this a while back in a [stack exchange question](https://ai.stackexchange.com/questions/13755/does-retina-nets-focal-loss-accomplish-its-goal)). Given the lack of response in that post, I decided to investigate this myself. I propose another simple adaptive weighting scheme, but I propose applying the approach onto the gradient directly. I do this because most optimizers use a form of gradient descent $$\theta \leftarrow \theta - \nabla_{\theta}L$$, and so masking the gradient, directly masks how much is learned by each element. I call these set of losses, focal gradient loss  
+The question I pose with this, is does this accomplish their goal? (I asked this a while back in a [stack exchange question](https://ai.stackexchange.com/questions/13755/does-retina-nets-focal-loss-accomplish-its-goal)). Given the lack of response in that post, I decided to investigate this myself. I propose another simple adaptive weighting scheme, but I propose applying the approach onto the gradient directly. I do this because most optimizers use a form of gradient descent $$\theta \leftarrow \theta - \nabla_{\theta}L$$, and so masking the gradient, directly masks how much is learned by each element. I call this set of losses, *focal gradient loss*    
 
 $$FGL(p) \propto - StopGradient((1-p)^\gamma) \ log(p)$$
 
 ### Comparing the objective functions  
-Its hard to understand it comparitively with the $$StopGradient$$ function, so first lets look at this gradients  
+Its hard to understand it comparitively with the $$StopGradient$$ function, so first lets look at their gradients  
 
 $$
 \begin{aligned}
@@ -61,6 +61,6 @@ Due to computational reasons, we will test on only the setting of $$\gamma = 2$$
   <img src="/images/FocalGradientLoss/fl_vs_fgl.png">
 </p>   
 
-Looking at the results we see they perform similarly. Focal Gradient Loss actually does have a slightly better mAP, but this could be due to noise produced in the training procedure. There also more noise in general in the Focal Gradient Loss's training compared to Focal Losses-- this may be due to the lack of that additive bias. From this singular (and incomplete) experiment there isnt enough to make conclusions, but if I were forced to do so, I would say the perform similarly but Focal Gradient seems less robust.   
+Looking at the results we see they perform similarly. Focal Gradient Loss actually does have a slightly better mAP, but this could be due to noise produced in the training procedure. There is also more noise in general in the Focal Gradient Loss's training compared to Focal Losses-- this may be due to the lack of that additive bias. From this singular (and incomplete) experiment there isnt enough to make conclusions, but if I were forced to do so, I would say the perform similarly but Focal Gradient seems less robust.   
 I will hopefully be adding more experiments in the future. Stay tuned.
 
