@@ -1,0 +1,540 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>(Res) Super-Masks: Are They Good Initializations? - Mikes ML blog</title>
+<meta name="description" content="In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Mikes ML blog">
+<meta property="og:title" content="(Res) Super-Masks: Are They Good Initializations?">
+<meta property="og:url" content="/SuperMasks/">
+
+
+  <meta property="og:description" content="In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-11-02T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/SuperMasks/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Michael Shliselberg",
+      "url": "/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="ssEy9GjG7EEGOSmwhT5SxFQpr4mSvw2LK-IrNVc-aYg" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Mikes ML blog Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Mikes ML blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/" >About Me</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="(Res) Super-Masks: Are They Good Initializations?">
+    <meta itemprop="description" content="In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis">
+    <meta itemprop="datePublished" content="November 02, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">(Res) Super-Masks: Are They Good Initializations?
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A large advancement in understanding neural networks was the discovery of <em>lottery tickets</em>. Subgraphs of initializations that are correlated to better positioning in the loss manifold can be discovered through pruning of a trained network. This was investigated after a plethora of empirical pruning results, that on mulitple state-of-the-art models parameters can be reduced up to 90% with minimal reduction to accuracy. Investigating this further, some cool people at Uber discovered <strong>Super-Masks</strong>. Super-Masks are parameter masks that find a subgraph of the models initialization that performs relatively well. This means with no actual change to the initialization weights themselves, there exists a suitable model within. How AMAZING is that???</p>
+
+<script type="math/tex; mode=display">\begin{aligned}
+\hat y = f(x; M \odot \theta_0) \\
+\end{aligned}</script>
+
+<p>So how do we solve for this mask <script type="math/tex">M</script>? Its a discrete parameter, so normal backprop wont work. The authors dont mention in the paper but after emailing them they told me they used <script type="math/tex">M = \sigma(\hat M) + StopGradient(Bern(\hat M) - \sigma(\hat M))</script> where you can actually learn <script type="math/tex">\hat M</script>. This is the expected value of the gradient of <script type="math/tex">Bern(\hat M)</script>. I find this not ideal due to the negative feedback derived from the variance and so I actually use thresholding, which can be thought of a reweighted gradient consideration, <script type="math/tex">M = \sigma(\hat M) + StopGradient((\hat M > \tau) - \sigma(\hat M))</script> where I set <script type="math/tex">\tau</script> to be just .5, I found that this approached achieved slightly better results. Note you can also use my Intermediate Loss sampling I introduced a couple blog posts back.</p>
+
+<p>One question the supermask paper left me with is, <em>how good is it as an initialization?</em> Lottery tickets show quicker training with slightly stronger performance than the original. Does this still hold up? So lets do some preliminary experimentation. I look into mnist and cifar10, specifically using Wide Resnet 28. I modify the implementation from keras-contrib to allow for learned masking of the convolution and dense layers. For experiments, I use a batch size of 128 and a learning rate of .01 for training both the mask-only and weight-only setups for 30 epochs. Also for all training sessions we use random flips, translations and rotations for data augmentation. I then also take the best masked version, freeze the mask, unfreeze the weights and train up to 30 epochs as well. Note that for when I fine tune the supermasked model I use a reduce learning rate of 1e-5 because in practice ive noticed empricially the supermask to be extremely close to the local minimum, and any larger sized jumps almost entirely wiped out the boost of utilizing the super mask.</p>
+
+<p align="center">
+  <img src="/images/SuperMask/mnist_training.png" />
+  <br /><b>MNIST Training</b>
+</p>
+
+<p align="center">
+  <img src="/images/SuperMask/cifar10_training.png" />
+  <br /><b>Cifar10 Training</b>
+</p>
+
+<p>As you can see in the above two figures, mnist supermasks achieve similar results with equal training times as the normal regime. In this case, I do not see much improvement from using it as an initialization, but this is probably because they all converge to similar minima quickly. Cifar10 on the other hand, we see equal training from both schemes for most of the way but then using the masked variation as an initialization we see a large jump in accuracy. This is really interesting to see. In the initial paper, on Cifar 10 they showed good results, but they did not do as well as the conv nets (except for the small model used for mnist), but here on a deep competetive model, we actually see sheer masking can do wonders. Moreso, starting from the masked initialization leads to a decent boost (the green lines in the cifar10 training figure). So lets see what else we can learn from these experiments.</p>
+
+<p align="center">
+  <img src="/images/SuperMask/mnist_percent_vs_nparams.png" />
+  <br /><b>MNIST mask utilization</b>
+</p>
+
+<p align="center">
+  <img src="/images/SuperMask/cifar10_percent_vs_nparams.png" />
+  <br /><b>Cifar10 mask utilization</b>
+</p>
+
+<p>In the above two figures, we see a very specific pattern: if layers had less weights, the mask percent dropped heavily. I explain this with the obvious consideration of ‘less weights / filters = information bottleneck = much harder to mess with’. I do want to note that no layer masks more than ~16%, so unlike these tiny lottery tickets discovered by pruning a trained model, were seeing Dense masks on random initializations that perform amazingly both by themselves and as initializations. A good addition in the future would be to invesitgate this discrepancy between lottery tickets and these super-masks because they do seems to be working on different properties of neural networks and their loss manifold.</p>
+
+<p>The goal of this post was to describe and play with SuperMasks and answer if <em>Super-Masks work as strong<strong>er</strong> initializations?</em> From the experiments I did, I show you can achieve a boost in performance using this strategy! Note I did only do a small subset of experiments on small datsets, so seeing if this extends to larger datasets would be a fun continuation too.</p>
+
+<p>I hope you guys enjoyed the post and <a href="https://github.com/mshlis/SuperMasks">here</a> is the repo for reproduction and playing yourself with the Super-Masks</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#research" class="page__taxonomy-item" rel="tag">research</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#super-masks" class="page__taxonomy-item" rel="tag">super-masks</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-11-02T00:00:00-04:00">November 02, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%28Res%29+Super-Masks%3A+Are+They+Good+Initializations%3F%20%2FSuperMasks%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2FSuperMasks%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2FSuperMasks%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/HackUmassMentor/" class="pagination--pager" title="(Pers) Hack Umass Mentor
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Leave a comment</h4>
+      <section class="fb-comments" data-href="/SuperMasks/" data-mobile="true" data-num-posts="5" data-width="100%" data-colorscheme="dark"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/HackUmassMentor/" rel="permalink">(Pers) Hack Umass Mentor
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that ar...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/FocalGradLoss/" rel="permalink">(Res) Focal Gradient Loss: Are we looking at focal loss correctly?
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the gradient level rat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/ILSampling/" rel="permalink">(Res) Intermediate Loss Sampling, a Differentiable Categorical Sampler
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. I compare this method to the commo...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/ANNagram/" rel="permalink">(Rand) ANNagram
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">ANNagram is a neural network to take a set of letters and output a possible word. I use a pointer network with a transformer backbone for this task. In the p...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/mshlis" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> gitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 Michael Shliselberg. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+  <script>
+  window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+  ga('create','UA-151394608-1','auto');
+  ga('set', 'anonymizeIp', false);
+  ga('send','pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+  </body>
+</html>

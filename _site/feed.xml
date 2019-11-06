@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-11-05T23:33:51-05:00</updated><id>/feed.xml</id><title type="html">Mikes ML blog</title><subtitle>great blog by a great dude</subtitle><author><name>Michael Shliselberg</name></author><entry><title type="html">(Res) Super-Masks: Are They Good Initializations?</title><link href="/SuperMasks/" rel="alternate" type="text/html" title="(Res) Super-Masks: Are They Good Initializations?" /><published>2019-11-02T00:00:00-04:00</published><updated>2019-11-02T00:00:00-04:00</updated><id>/SuperMasks</id><content type="html" xml:base="/SuperMasks/">&lt;p&gt;A large advancement in understanding neural networks was the discovery of &lt;em&gt;lottery tickets&lt;/em&gt;. Subgraphs of initializations that are correlated to better positioning in the loss manifold can be discovered through pruning of a trained network. This was investigated after a plethora of empirical pruning results, that on mulitple state-of-the-art models parameters can be reduced up to 90% with minimal reduction to accuracy. Investigating this further, some cool people at Uber discovered &lt;strong&gt;Super-Masks&lt;/strong&gt;. Super-Masks are parameter masks that find a subgraph of the models initialization that performs relatively well. This means with no actual change to the initialization weights themselves, there exists a suitable model within. How AMAZING is that???&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{aligned}
+\hat y = f(x; M \odot \theta_0) \\
+\end{aligned}&lt;/script&gt;
+
+&lt;p&gt;So how do we solve for this mask &lt;script type=&quot;math/tex&quot;&gt;M&lt;/script&gt;? Its a discrete parameter, so normal backprop wont work. The authors dont mention in the paper but after emailing them they told me they used &lt;script type=&quot;math/tex&quot;&gt;M = \sigma(\hat M) + StopGradient(Bern(\hat M) - \sigma(\hat M))&lt;/script&gt; where you can actually learn &lt;script type=&quot;math/tex&quot;&gt;\hat M&lt;/script&gt;. This is the expected value of the gradient of &lt;script type=&quot;math/tex&quot;&gt;Bern(\hat M)&lt;/script&gt;. I find this not ideal due to the negative feedback derived from the variance and so I actually use thresholding, which can be thought of a reweighted gradient consideration, &lt;script type=&quot;math/tex&quot;&gt;M = \sigma(\hat M) + StopGradient((\hat M &gt; \tau) - \sigma(\hat M))&lt;/script&gt; where I set &lt;script type=&quot;math/tex&quot;&gt;\tau&lt;/script&gt; to be just .5, I found that this approached achieved slightly better results. Note you can also use my Intermediate Loss sampling I introduced a couple blog posts back.&lt;/p&gt;
+
+&lt;p&gt;One question the supermask paper left me with is, &lt;em&gt;how good is it as an initialization?&lt;/em&gt; Lottery tickets show quicker training with slightly stronger performance than the original. Does this still hold up? So lets do some preliminary experimentation. I look into mnist and cifar10, specifically using Wide Resnet 28. I modify the implementation from keras-contrib to allow for learned masking of the convolution and dense layers. For experiments, I use a batch size of 128 and a learning rate of .01 for training both the mask-only and weight-only setups for 30 epochs. Also for all training sessions we use random flips, translations and rotations for data augmentation. I then also take the best masked version, freeze the mask, unfreeze the weights and train up to 30 epochs as well. Note that for when I fine tune the supermasked model I use a reduce learning rate of 1e-5 because in practice ive noticed empricially the supermask to be extremely close to the local minimum, and any larger sized jumps almost entirely wiped out the boost of utilizing the super mask.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/SuperMask/mnist_training.png&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;MNIST Training&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/SuperMask/cifar10_training.png&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;Cifar10 Training&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p&gt;As you can see in the above two figures, mnist supermasks achieve similar results with equal training times as the normal regime. In this case, I do not see much improvement from using it as an initialization, but this is probably because they all converge to similar minima quickly. Cifar10 on the other hand, we see equal training from both schemes for most of the way but then using the masked variation as an initialization we see a large jump in accuracy. This is really interesting to see. In the initial paper, on Cifar 10 they showed good results, but they did not do as well as the conv nets (except for the small model used for mnist), but here on a deep competetive model, we actually see sheer masking can do wonders. Moreso, starting from the masked initialization leads to a decent boost (the green lines in the cifar10 training figure). So lets see what else we can learn from these experiments.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/SuperMask/mnist_percent_vs_nparams.png&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;MNIST mask utilization&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/SuperMask/cifar10_percent_vs_nparams.png&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;Cifar10 mask utilization&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p&gt;In the above two figures, we see a very specific pattern: if layers had less weights, the mask percent dropped heavily. I explain this with the obvious consideration of ‘less weights / filters = information bottleneck = much harder to mess with’. I do want to note that no layer masks more than ~16%, so unlike these tiny lottery tickets discovered by pruning a trained model, were seeing Dense masks on random initializations that perform amazingly both by themselves and as initializations. A good addition in the future would be to invesitgate this discrepancy between lottery tickets and these super-masks because they do seems to be working on different properties of neural networks and their loss manifold.&lt;/p&gt;
+
+&lt;p&gt;The goal of this post was to describe and play with SuperMasks and answer if &lt;em&gt;Super-Masks work as strong&lt;strong&gt;er&lt;/strong&gt; initializations?&lt;/em&gt; From the experiments I did, I show you can achieve a boost in performance using this strategy! Note I did only do a small subset of experiments on small datsets, so seeing if this extends to larger datasets would be a fun continuation too.&lt;/p&gt;
+
+&lt;p&gt;I hope you guys enjoyed the post and &lt;a href=&quot;https://github.com/mshlis/SuperMasks&quot;&gt;here&lt;/a&gt; is the repo for reproduction and playing yourself with the Super-Masks&lt;/p&gt;</content><author><name>Michael Shliselberg</name></author><category term="super-masks" /><category term="research" /><summary type="html">In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis</summary></entry><entry><title type="html">(Pers) Hack Umass Mentor</title><link href="/HackUmassMentor/" rel="alternate" type="text/html" title="(Pers) Hack Umass Mentor" /><published>2019-10-21T00:00:00-04:00</published><updated>2019-10-21T00:00:00-04:00</updated><id>/HackUmassMentor</id><content type="html" xml:base="/HackUmassMentor/">&lt;p&gt;This past weekend I had the pleasure of being a mentor at Hack Umass. Going to Umass as an ECE student, I saw the development of this event from a small hardware-only hackathon to what it is now. Now every year, me and a few friends drive up to the event to see the cool hacks and reconnect. This year though was my first as being a mentor&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/HUM/nutshell.jpg&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;Hack Umass in a nutshell&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&quot;what-is-a-hackathon&quot;&gt;What is a hackathon?&lt;/h4&gt;
+&lt;p&gt;Most reading this probably already know what a hackathon is but just in case I will reverberate it. Hackathons are events where people come together and compete in a fixed time interval to “hack” together a cool project! Hackathons can be themed or have some form of goal statement. Examples can include Healthcare, AI, Blockchain, or any buzzword of choice… or they can just be open ended (Hack Umass fits in this category). Its a great time, brainstorming, coding, food, stress, energy drinks and a lack of sleep. Its a haven.&lt;/p&gt;
+
+&lt;h4 id=&quot;hack-umass&quot;&gt;Hack Umass&lt;/h4&gt;
+&lt;p&gt;I was a mentor. This just includes being available for groups that have questions or need any other form of help. The group of mentors included a diverse set of volunteers with skills spanning a variety of realms of hardware and software.&lt;br /&gt;
+Unfortunately there was over 850 participants and not nearly as many mentors. So sometimes you’re left with groups requiring assistance in a domain you dont know much about. This is what I want to focus on.&lt;/p&gt;
+
+&lt;p&gt;Over 50% of the questions I ended up with regarded microcontrollers. During my degree in computer engineering I was no stranger to working with microcontrollers but its been a while and it definitely was not my expertise. &lt;strong&gt;So how can I help a group of students if I dont know the answer myself?&lt;/strong&gt; Luckily accross many domains alot of the same debugging procedures apply. These include the usual suspects&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Is it software? You have a debugger?
+    &lt;ul&gt;
+      &lt;li&gt;No debugger means use print statements (or get a debugger if possible)&lt;/li&gt;
+      &lt;li&gt;Sometimes print statements may just be easier (I know this is sacriledge to say, but its case to case in my opinion)&lt;/li&gt;
+      &lt;li&gt;Check versioning&lt;/li&gt;
+      &lt;li&gt;Test components seperately if possible with drivers/stubs (this may be expensive given the time frame, but sometimes you can build these as you go)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Google the error
+    &lt;ul&gt;
+      &lt;li&gt;Include errors that link to the exernal issues&lt;/li&gt;
+      &lt;li&gt;Include version / meta info depending on the error&lt;/li&gt;
+      &lt;li&gt;Use possible solutions / tutorials found&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When using a tutorial
+    &lt;ul&gt;
+      &lt;li&gt;Make sure anything you do is reversable! (because it worked for someone else doesnt mean it will for you, and you maybe could make it worse!)&lt;/li&gt;
+      &lt;li&gt;If one tutorial does not solve it for you, undo the changes before finding another – sometimes solutions conflict&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Could it be the hardware?
+    &lt;ul&gt;
+      &lt;li&gt;Noone wants to blame the hardware, seems like a cowardly scapegoat, but sometimes it really is!&lt;/li&gt;
+      &lt;li&gt;Check components one by one if possible (drivers/stubs, voltmeter, ampmeter, replace the part, etc..)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These are just a handful of paths, but alot of the time its adaptive. Errors can by tricky and sometimes multi faceted, so it is case by case but alot of the time this pseudo-road map will get you far.&lt;/p&gt;
+
+&lt;p&gt;Also as a mentor, sometimes adding a new perspective adds something. Im sure everyone has done this: you begin a group project and everyone has their own ideas, but eventually you converge on a concept and a path but once there, you all are so focused on that, that you dont pay attention to some obvious mistakes/solutions– same is true for any form of group based problem solving.&lt;/p&gt;
+
+&lt;p&gt;Overall it was a great weekend. I got a chance to goto pita pocket (best restaurant in all of amherst with greatest falafel on this side of the planet) and saw my friends while meeting a ton of awesome people. Seeing so many people working on such amazing projects is always inspiring and always gets you revved up! It was a wonderful experience and I hope to be there again next year.&lt;/p&gt;</content><author><name>Michael Shliselberg</name></author><category term="hackathon" /><category term="personal" /><summary type="html">This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that are helpful in a variety of scenarios</summary></entry><entry><title type="html">(Res) Focal Gradient Loss: Are we looking at focal loss correctly?</title><link href="/FocalGradLoss/" rel="alternate" type="text/html" title="(Res) Focal Gradient Loss: Are we looking at focal loss correctly?" /><published>2019-10-20T00:00:00-04:00</published><updated>2019-10-20T00:00:00-04:00</updated><id>/FocalGradLoss</id><content type="html" xml:base="/FocalGradLoss/">&lt;p&gt;Retinanet is a near state-of-the-art object detector that using a simple adaptive weighting scheme, helps bridge some of the gap between one and two stage object detectors by dealing with inherent class imbalance from the large background set constructed by the anchoring process. Specifically they use Focal Loss&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;FL(p) \propto - (1-p)^\gamma log(p)&lt;/script&gt;
+
+&lt;p&gt;The usage of &lt;script type=&quot;math/tex&quot;&gt;(1-p)^\gamma&lt;/script&gt; down weights the categorical cross entropy loss along with how high &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt; is. This is parameterized by &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;, where the higher it is, the greater the down weighting is. In their paper they make it clear this choice of adaptive weighting is arbitrary and could be replaced with other schemes.&lt;/p&gt;
+
+&lt;p&gt;The question I pose with this, is does this accomplish their goal? (I asked this a while back in a &lt;a href=&quot;https://ai.stackexchange.com/questions/13755/does-retina-nets-focal-loss-accomplish-its-goal&quot;&gt;stack exchange question&lt;/a&gt;). Given the lack of response in that post, I decided to investigate this myself. I propose another simple adaptive weighting scheme, but I propose applying the approach onto the gradient directly. I do this because most optimizers use a form of gradient descent &lt;script type=&quot;math/tex&quot;&gt;\theta \leftarrow \theta - \nabla_{\theta}L&lt;/script&gt;, and so masking the gradient, directly masks how much is learned by each element. I call this set of losses, &lt;em&gt;focal gradient loss&lt;/em&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;FGL(p) \propto - StopGradient((1-p)^\gamma) \ log(p)&lt;/script&gt;
+
+&lt;h3 id=&quot;comparing-the-objective-functions&quot;&gt;Comparing the objective functions&lt;/h3&gt;
+&lt;p&gt;Its hard to understand it comparitively with the &lt;script type=&quot;math/tex&quot;&gt;StopGradient&lt;/script&gt; function, so first lets look at their gradients&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{aligned}
+    \dot{FL(p)} &amp;= - \frac{(1-p)^\gamma }{p} + \gamma (1-p)^{\gamma - 1} \ log(p)\\
+    &amp;= -(1-p)^\gamma \ \dot{CE(p)} + \gamma (1-p)^{\gamma - 1} \ log(p)\\
+    &amp;= -(1-p)^\gamma \ \dot{CE(p)} + R(p) \\
+    \dot{FGL(p)} &amp;= - \frac{(1-p)^\gamma }{p} \\
+    &amp;= -(1-p)^\gamma \ \dot{CE(p)}  \
+\end{aligned} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Looking at these, we see the focal-loss is a masked version of adaptive weighting plus a residual, &lt;script type=&quot;math/tex&quot;&gt;R(p)&lt;/script&gt;. This is the differentiating factor in the two appraoches. We can rewrite the residual as &lt;script type=&quot;math/tex&quot;&gt;R(p) = -\gamma * FL_{\gamma -1}(p)&lt;/script&gt;. It is difficult to say what this does in the optimization perspective, but in terms of sheer magnitude it will always increase the gradient (because the gradient is always negative), moreso if a loss variant is high. This is difficult to describe intuitively but it may be be seen as an additive adaptive bias. This actually increases the spread if you do the math out which may be seen as a benefit but difficult to say for certain, which is why I perform this experiment.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/FocalGradientLoss/focal_gradients.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Even though stop_gradient makes it not easily comparable in the loss space, we can integrate its gradient to see its effective equivalent. For values of &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt; that arent integers, the integral becomes alot more complicated, so for ease lets just look at the integer case&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{aligned}
+    L(p) &amp;= \int_{z=1}^p -\frac{(1-z)^\gamma}{z} dz\\
+    &amp;= -log(p) - \sum_{i=1}^\gamma {\gamma \choose i}\frac{(-p)^i - (-1)^i}{i} \
+\end{aligned} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Note that the bottom bound of the integral is arbitrary, because it only effects the constant, but since we set &lt;script type=&quot;math/tex&quot;&gt;FGL(1)=0&lt;/script&gt; from the stop_gradient formulation, I use &lt;script type=&quot;math/tex&quot;&gt;z=1&lt;/script&gt; to keep it consistent. Now plotting these we see the following&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/FocalGradientLoss/focal_objectives.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;As you can see, focal gradient loss is always lower than the respective focal loss which is understandable based on the spread differential caused by the Residual.&lt;/p&gt;
+
+&lt;h3 id=&quot;experiment&quot;&gt;Experiment&lt;/h3&gt;
+&lt;p&gt;Due to computational reasons, we will test on only the setting of &lt;script type=&quot;math/tex&quot;&gt;\gamma = 2&lt;/script&gt; for 15 epochs on PASCAL VOC 2012. We use the keras-retinanet open source package to do this. Only adjustments I add to the repo is make the custom loss function, and I adjust the training to work with Horovod for more efficient parallelization (I will take any speedups I can get :D)&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/FocalGradientLoss/fl_vs_fgl.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Looking at the results we see they perform similarly. Focal Gradient Loss actually does have a slightly better mAP, but this could be due to noise produced in the training procedure. There is also more noise in general in the Focal Gradient Loss’s training compared to Focal Losses– this may be due to the lack of that additive bias. From this singular (and incomplete) experiment there isnt enough to make conclusions, but if I were forced to do so, I would say the perform similarly but Focal Gradient seems less robust. &lt;br /&gt;
+I will hopefully be adding more experiments in the future. Stay tuned.&lt;/p&gt;</content><author><name>Michael Shliselberg</name></author><category term="optimization" /><category term="object detection" /><category term="research" /><summary type="html">In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the gradient level rather than at the objective function level</summary></entry><entry><title type="html">(Res) Intermediate Loss Sampling, a Differentiable Categorical Sampler</title><link href="/ILSampling/" rel="alternate" type="text/html" title="(Res) Intermediate Loss Sampling, a Differentiable Categorical Sampler" /><published>2019-10-14T00:00:00-04:00</published><updated>2019-10-14T00:00:00-04:00</updated><id>/ILSampling</id><content type="html" xml:base="/ILSampling/">&lt;p&gt;I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. There exists a long history of using policy gradient techniques where only the policy network gradients are utilized, but in the last couple of years approaches like the Gumbel Softmax has surfaced. Gumbel Softmax attempts to model categorical variables through a reparametrization trick and uses softmax to approximate the argmax operator, which in result is completely differentiable. The gumbell softmax is parametrized by a temperature hyperparameter, &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;. at &lt;script type=&quot;math/tex&quot;&gt;T=0&lt;/script&gt;, this approximation is equivalent to a draw from the categorical distribution but the gradient is undefined. As &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; increases, the derivative is more defined, but the sample becomes more and more smooth. This give and take is the primary issue with this approach.&lt;/p&gt;
+
+&lt;h3 id=&quot;construction&quot;&gt;Construction&lt;/h3&gt;
+&lt;p&gt;As a forward pass, it is simply the draw itself with no approximations. For a backpass, we define an intermediate loss function &lt;script type=&quot;math/tex&quot;&gt;KL(\pi_D || \pi)&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\pi_D&lt;/script&gt; is a single SGD step from solving which distribution best approximates our end objective. Note that this takes advantage that a categorical draw in one-hot form is visually equivalent to a delta function. Due to that, all it would require is some function &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; that maps real vectors onto some probability simplex such that &lt;script type=&quot;math/tex&quot;&gt;h(z) = z&lt;/script&gt;. The actual algorithm then follows the description below&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/ILS/ILS.png&quot; width=&quot;650px&quot; height=&quot;250px&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;algorithm&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;toy-problems&quot;&gt;Toy Problems&lt;/h3&gt;
+&lt;h4 id=&quot;toy-example-1&quot;&gt;Toy Example 1:&lt;/h4&gt;
+&lt;p&gt;I show the efficacy of the approach with a toy example where soft-sampling would actually be advantagous. Intermediate Loss Sampling ends up performing just as well if not better. Given a random discrete categorical distribution I solve for minimizing &lt;script type=&quot;math/tex&quot;&gt;\mathbb{E}[KL(\pi_{true} || \pi_{model})]&lt;/script&gt; by only having access to singular draws at the time. Given that KL divergence is greater than 0, I show this is a suitable test by showing its an upper bound of our true object and creating a squeeze-based optimization problem.&lt;/p&gt;
+
+&lt;p&gt;The simple proof:&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/ILS/ex1_0.png&quot; height=&quot;250px&quot; width=&quot;350px&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;For my experiemnts I use temperatures of .1, 1, 10 for the gumbel softmax and stepsizes of 1e-1, 1e-2, 1e-3 for the intermediate loss sampling.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/ILS/toyexp_1.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The above shows that in all settings the intermediate loss approach works just as well if not better and converges almost immediately. Note that the noise in the IL settings is because of the inherent variance of using single-step draws, which gumbel-softmax wont have as it can produce smoother outputs than pure one-hot encodings.&lt;/p&gt;
+
+&lt;p&gt;I hope to add more test cases soon. Other positives of this method include that it can extend to non-categorical random variables assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.&lt;/p&gt;
+
+&lt;p&gt;Click &lt;a href=&quot;https://github.com/mshlis/ILSampling&quot;&gt;here&lt;/a&gt; to see the Repo&lt;/p&gt;</content><author><name>Michael Shliselberg</name></author><category term="differentiable sampling" /><category term="research" /><summary type="html">I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. I compare this method to the commonly used Gumbel Softmax</summary></entry><entry><title type="html">(Rand) ANNagram</title><link href="/ANNagram/" rel="alternate" type="text/html" title="(Rand) ANNagram" /><published>2019-10-06T00:00:00-04:00</published><updated>2019-10-06T00:00:00-04:00</updated><id>/ANNagram</id><content type="html" xml:base="/ANNagram/">&lt;p&gt;For my first project in this blog I write from scratch a pointer network with a transformer backbone. For smaller inputs its a silly idea because exhaustive checking would be quick and accurate. That approach though would in a combinatoric fashion. On the other hand a transformer-based encoder/decoder will grow quadratically with input length. Granted there is still optimizations we could use in a deterministic search scheme, but what fun would that be? &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;erif --&amp;gt; fire || sichpys --&amp;gt; physics || nfuctnio --&amp;gt; function&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What are pointer nets?&lt;/strong&gt; Pointer Nets came out several years back, in attempts to setup a simplistic framework for varied length codomains. For a rearrangement problem like anagrams this is sensical approach given that different words have different sizes. These models extend encoder-decoder models, specifically the intial paper uses the seq2seq architecture.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/ANNagram/pointer_net.png&quot; width=&quot;600px&quot; height=&quot;400px&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;Figure stolen from pointer-net paper&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What is a transformer?&lt;/strong&gt; Lately due to the rise in language models (Ill probably do a project down the line going through those too) people confuse the term transformer for just encoder portion of the original model which originlly was an encoder-decoder architecture. These models work almost solely on attention. The use forms of dot product attention, which just means each logit is an inner product of the key and query. This decision is due to its ability to be constructed as a matrix multiplication which is easily parallelizable and has efficient implemetnations. They use multiple attention heads to be able to learn various query spaces at a certain feature level. Pros: O(1) layers required for intra-layer communication (Note this only holds where the input fits within the receptive field – this isnt always the case and there exists different tricks in extending this such as transformerXL). Cons: O(n^2) communications per attention head which can get pricey (Note there exist methodologies to use a tree like communication routine to push communication to O(n log n). This construction though comes at a cost of no temporal state. The original paper makes up for this by using a clever trick of adding frequency-varying sinsoids to the input that give the model the capabilities to learn a temporal representation. From an architectural perspective I feel this places alot of strain on the learning process, but empirically showed just as good results as learned embeddings. In most current implementations though you do see that return to learned temporal embeddings.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/images/ANNagram/transformer.png&quot; width=&quot;400px&quot; height=&quot;600px&quot; /&gt;
+  &lt;br /&gt;&lt;b&gt;Figure stolen from transformer paper&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p&gt;For this problem, were working on a set with no notion of time or order (on the encoder side) so we dont use any type of positional/temporal embedding. I chose this backbone because it thrives in informational communication along nodes. This aspect was particularly attractive from a design perspective because I can image how I would attempt looking for anagrams, and how this architecture can model that. Intuitively I would first check for combinations of letters that are commonly used together, group those and then use the vowels to glue those together until I hit a word that sounds familiar. On a single RTX2080Ti the model converges in nearly 20 minutes and produces somewhat decent results.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Possible extensions for later:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;we can design this to work with keys that can be used multiple times (example: &lt;code class=&quot;highlighter-rouge&quot;&gt;kntig --&amp;gt; knitting&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;we can add in spaces to actually learn to make phrases (example: &lt;code class=&quot;highlighter-rouge&quot;&gt;nrttgiarhee --&amp;gt; the tiger ran&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Click &lt;a href=&quot;https://github.com/mshlis/ANNagram&quot;&gt;here&lt;/a&gt; to see the Repo&lt;/p&gt;</content><author><name>Michael Shliselberg</name></author><category term="transformer" /><category term="pointer network" /><category term="fun" /><summary type="html">ANNagram is a neural network to take a set of letters and output a possible word. I use a pointer network with a transformer backbone for this task. In the post I delve into both what each of those architectures are and why I chose them.</summary></entry></feed>

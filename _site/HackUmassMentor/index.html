@@ -1,0 +1,552 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>(Pers) Hack Umass Mentor - Mikes ML blog</title>
+<meta name="description" content="This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that are helpful in a variety of scenarios">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Mikes ML blog">
+<meta property="og:title" content="(Pers) Hack Umass Mentor">
+<meta property="og:url" content="/HackUmassMentor/">
+
+
+  <meta property="og:description" content="This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that are helpful in a variety of scenarios">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-10-21T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/HackUmassMentor/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Michael Shliselberg",
+      "url": "/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="ssEy9GjG7EEGOSmwhT5SxFQpr4mSvw2LK-IrNVc-aYg" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Mikes ML blog Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Mikes ML blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/" >About Me</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="(Pers) Hack Umass Mentor">
+    <meta itemprop="description" content="This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that are helpful in a variety of scenarios">
+    <meta itemprop="datePublished" content="October 21, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">(Pers) Hack Umass Mentor
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This past weekend I had the pleasure of being a mentor at Hack Umass. Going to Umass as an ECE student, I saw the development of this event from a small hardware-only hackathon to what it is now. Now every year, me and a few friends drive up to the event to see the cool hacks and reconnect. This year though was my first as being a mentor</p>
+
+<p align="center">
+  <img src="/images/HUM/nutshell.jpg" />
+  <br /><b>Hack Umass in a nutshell</b>
+</p>
+
+<h4 id="what-is-a-hackathon">What is a hackathon?</h4>
+<p>Most reading this probably already know what a hackathon is but just in case I will reverberate it. Hackathons are events where people come together and compete in a fixed time interval to “hack” together a cool project! Hackathons can be themed or have some form of goal statement. Examples can include Healthcare, AI, Blockchain, or any buzzword of choice… or they can just be open ended (Hack Umass fits in this category). Its a great time, brainstorming, coding, food, stress, energy drinks and a lack of sleep. Its a haven.</p>
+
+<h4 id="hack-umass">Hack Umass</h4>
+<p>I was a mentor. This just includes being available for groups that have questions or need any other form of help. The group of mentors included a diverse set of volunteers with skills spanning a variety of realms of hardware and software.<br />
+Unfortunately there was over 850 participants and not nearly as many mentors. So sometimes you’re left with groups requiring assistance in a domain you dont know much about. This is what I want to focus on.</p>
+
+<p>Over 50% of the questions I ended up with regarded microcontrollers. During my degree in computer engineering I was no stranger to working with microcontrollers but its been a while and it definitely was not my expertise. <strong>So how can I help a group of students if I dont know the answer myself?</strong> Luckily accross many domains alot of the same debugging procedures apply. These include the usual suspects</p>
+
+<ul>
+  <li>Is it software? You have a debugger?
+    <ul>
+      <li>No debugger means use print statements (or get a debugger if possible)</li>
+      <li>Sometimes print statements may just be easier (I know this is sacriledge to say, but its case to case in my opinion)</li>
+      <li>Check versioning</li>
+      <li>Test components seperately if possible with drivers/stubs (this may be expensive given the time frame, but sometimes you can build these as you go)</li>
+    </ul>
+  </li>
+  <li>Google the error
+    <ul>
+      <li>Include errors that link to the exernal issues</li>
+      <li>Include version / meta info depending on the error</li>
+      <li>Use possible solutions / tutorials found</li>
+    </ul>
+  </li>
+  <li>When using a tutorial
+    <ul>
+      <li>Make sure anything you do is reversable! (because it worked for someone else doesnt mean it will for you, and you maybe could make it worse!)</li>
+      <li>If one tutorial does not solve it for you, undo the changes before finding another – sometimes solutions conflict</li>
+    </ul>
+  </li>
+  <li>Could it be the hardware?
+    <ul>
+      <li>Noone wants to blame the hardware, seems like a cowardly scapegoat, but sometimes it really is!</li>
+      <li>Check components one by one if possible (drivers/stubs, voltmeter, ampmeter, replace the part, etc..)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>These are just a handful of paths, but alot of the time its adaptive. Errors can by tricky and sometimes multi faceted, so it is case by case but alot of the time this pseudo-road map will get you far.</p>
+
+<p>Also as a mentor, sometimes adding a new perspective adds something. Im sure everyone has done this: you begin a group project and everyone has their own ideas, but eventually you converge on a concept and a path but once there, you all are so focused on that, that you dont pay attention to some obvious mistakes/solutions– same is true for any form of group based problem solving.</p>
+
+<p>Overall it was a great weekend. I got a chance to goto pita pocket (best restaurant in all of amherst with greatest falafel on this side of the planet) and saw my friends while meeting a ton of awesome people. Seeing so many people working on such amazing projects is always inspiring and always gets you revved up! It was a wonderful experience and I hope to be there again next year.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#hackathon" class="page__taxonomy-item" rel="tag">hackathon</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#personal" class="page__taxonomy-item" rel="tag">personal</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-10-21T00:00:00-04:00">October 21, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%28Pers%29+Hack+Umass+Mentor%20%2FHackUmassMentor%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2FHackUmassMentor%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2FHackUmassMentor%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/FocalGradLoss/" class="pagination--pager" title="(Res) Focal Gradient Loss: Are we looking at focal loss correctly?
+">Previous</a>
+    
+    
+      <a href="/SuperMasks/" class="pagination--pager" title="(Res) Super-Masks: Are They Good Initializations?
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Leave a comment</h4>
+      <section class="fb-comments" data-href="/HackUmassMentor/" data-mobile="true" data-num-posts="5" data-width="100%" data-colorscheme="dark"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/SuperMasks/" rel="permalink">(Res) Super-Masks: Are They Good Initializations?
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/FocalGradLoss/" rel="permalink">(Res) Focal Gradient Loss: Are we looking at focal loss correctly?
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this post I discuss a new loss function for single stage object detectors that like retinanets focal loss is adaptive, but works at the gradient level rat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/ILSampling/" rel="permalink">(Res) Intermediate Loss Sampling, a Differentiable Categorical Sampler
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. I compare this method to the commo...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/ANNagram/" rel="permalink">(Rand) ANNagram
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">ANNagram is a neural network to take a set of letters and output a possible word. I use a pointer network with a transformer backbone for this task. In the p...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/mshlis" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> gitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 Michael Shliselberg. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+  <script>
+  window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+  ga('create','UA-151394608-1','auto');
+  ga('set', 'anonymizeIp', false);
+  ga('send','pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+
+  </body>
+</html>

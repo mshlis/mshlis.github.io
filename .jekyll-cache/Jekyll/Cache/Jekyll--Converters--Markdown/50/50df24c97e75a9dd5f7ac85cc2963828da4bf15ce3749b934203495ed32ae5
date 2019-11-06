@@ -1,0 +1,2 @@
+I"õ<p>ANNagram is a neural network to take a set of letters and output a possible word. I use a pointer network with a transformer backbone for this task. In the post I delve into both what each of those architectures are and why I chose them.</p>
+:ET

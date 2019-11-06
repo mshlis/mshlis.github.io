@@ -1,0 +1,32 @@
+I"‰<p>I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. There exists a long history of using policy gradient techniques where only the policy network gradients are utilized, but in the last couple of years approaches like the Gumbel Softmax has surfaced. Gumbel Softmax attempts to model categorical variables through a reparametrization trick and uses softmax to approximate the argmax operator, which in result is completely differentiable. The gumbell softmax is parametrized by a temperature hyperparameter, <script type="math/tex">T</script>. at <script type="math/tex">T=0</script>, this approximation is equivalent to a draw from the categorical distribution but the gradient is undefined. As <script type="math/tex">T</script> increases, the derivative is more defined, but the sample becomes more and more smooth. This give and take is the primary issue with this approach.</p>
+
+<h3 id="construction">Construction</h3>
+<p>As a forward pass, it is simply the draw itself with no approximations. For a backpass, we define an intermediate loss function <script type="math/tex">KL(\pi_D || \pi)</script> where <script type="math/tex">\pi_D</script> is a single SGD step from solving which distribution best approximates our end objective. Note that this takes advantage that a categorical draw in one-hot form is visually equivalent to a delta function. Due to that, all it would require is some function <script type="math/tex">h</script> that maps real vectors onto some probability simplex such that <script type="math/tex">h(z) = z</script>. The actual algorithm then follows the description below</p>
+
+<p align="center">
+  <img src="/images/ILS/ILS.png" width="650px" height="250px" />
+  <br /><b>algorithm</b>
+</p>
+
+<h3 id="toy-problems">Toy Problems</h3>
+<h4 id="toy-example-1">Toy Example 1:</h4>
+<p>I show the efficacy of the approach with a toy example where soft-sampling would actually be advantagous. Intermediate Loss Sampling ends up performing just as well if not better. Given a random discrete categorical distribution I solve for minimizing <script type="math/tex">\mathbb{E}[KL(\pi_{true} || \pi_{model})]</script> by only having access to singular draws at the time. Given that KL divergence is greater than 0, I show this is a suitable test by showing its an upper bound of our true object and creating a squeeze-based optimization problem.</p>
+
+<p>The simple proof:</p>
+
+<p align="center">
+  <img src="/images/ILS/ex1_0.png" height="250px" width="350px" />
+</p>
+
+<p>For my experiemnts I use temperatures of .1, 1, 10 for the gumbel softmax and stepsizes of 1e-1, 1e-2, 1e-3 for the intermediate loss sampling.</p>
+
+<p align="center">
+  <img src="/images/ILS/toyexp_1.png" />
+</p>
+
+<p>The above shows that in all settings the intermediate loss approach works just as well if not better and converges almost immediately. Note that the noise in the IL settings is because of the inherent variance of using single-step draws, which gumbel-softmax wont have as it can produce smoother outputs than pure one-hot encodings.</p>
+
+<p>I hope to add more test cases soon. Other positives of this method include that it can extend to non-categorical random variables assuming you can find a loss function that is closed-form differentiable with respect to the parameters you are learning.</p>
+
+<p>Click <a href="https://github.com/mshlis/ILSampling">here</a> to see the Repo</p>
+:ET
