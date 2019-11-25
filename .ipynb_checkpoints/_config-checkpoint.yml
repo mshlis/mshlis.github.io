@@ -123,6 +123,9 @@ author:
     - label: "github"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/mshlis"
+    - label: "ai.SE"
+      icon: "fas fa-fw fa-link"
+      url: "https://ai.stackexchange.com/users/25496/mshlis"
 
 # Site Footer
 footer:
