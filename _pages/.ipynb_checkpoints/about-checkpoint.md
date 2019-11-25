@@ -19,7 +19,7 @@ Now some other stuff about me:
    - DC > Marvel (inequality only holds if we aren't including the cinematic universes)
    - Favorite technical quote: "*variational inference is what you implement while you're waiting for your MCMC to converge*" - D. Blei
    - Favorite non-technical quote: "*if I weren't crazy, id be insane*" - The Joker
-   - For Halloween in 3rd grade, I was a stoplight :|   
+   - For Halloween in 3rd grade, I was a stoplight     
    - High Variance Bowler  
    - Favorite show was 'The Mentalist'
    - Facorite movie is 'The Dark Knight'
