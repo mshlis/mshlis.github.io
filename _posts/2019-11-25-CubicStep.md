@@ -1,5 +1,6 @@
 ---
 author: Michael Shliselberg
+sidebar: true
 author_profile: true
 date: 2019-11-25
 tags: [optimization, research]
