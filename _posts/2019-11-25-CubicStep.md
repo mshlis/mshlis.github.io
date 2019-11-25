@@ -7,6 +7,7 @@ tags: [optimization, research]
 comments: true
 excerpt: "Current gradient based optimization ignores 0th order information. In this post I want to motivate others to try utilizing it."
 mathjax: "true"
+permalink: /CubicStep/
 title: "(Res) Cubic Step: We Have More Info, Lets Use It!"
 ---   
 

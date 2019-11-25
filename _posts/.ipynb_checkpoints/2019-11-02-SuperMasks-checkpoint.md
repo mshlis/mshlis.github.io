@@ -6,6 +6,7 @@ tags: [super-masks, research]
 comments: true
 excerpt: "In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis"
 mathjax: "true"
+permalink: /SuperMasks/
 title: "(Res) Super-Masks: Are They Good Initializations?"
 ---   
 
