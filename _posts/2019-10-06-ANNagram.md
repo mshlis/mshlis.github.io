@@ -1,5 +1,6 @@
 ---
 author: Michael Shliselberg
+author_profile: true
 date: 2019-10-06
 tags: [transformer, pointer network, fun]
 comments: true

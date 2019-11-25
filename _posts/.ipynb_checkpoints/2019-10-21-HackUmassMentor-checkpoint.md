@@ -1,5 +1,6 @@
 ---
 author: Michael Shliselberg
+author_profile: true
 date: 2019-10-21
 tags: [hackathon, personal]
 comments: true

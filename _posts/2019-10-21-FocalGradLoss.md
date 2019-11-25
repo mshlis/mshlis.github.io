@@ -1,5 +1,6 @@
 ---
 author: Michael Shliselberg
+author_profile: true
 date: 2019-10-20
 tags: [optimization, object detection, research]
 comments: true
