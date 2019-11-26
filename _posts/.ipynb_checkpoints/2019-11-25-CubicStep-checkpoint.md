@@ -1,5 +1,6 @@
 ---
 author: Michael Shliselberg
+layout: single
 sidebar: true
 author_profile: true
 date: 2019-11-25
@@ -7,6 +8,7 @@ tags: [optimization, research]
 comments: true
 excerpt: "Current gradient based optimization ignores 0th order information. In this post I want to motivate others to try utilizing it."
 mathjax: "true"
+permalink: /CubicStep/
 title: "(Res) Cubic Step: We Have More Info, Lets Use It!"
 ---   
 
