@@ -1,6 +1,6 @@
 ---
 author: Michael Shliselberg
-layout: single
+layout: home
 sidebar: true
 author_profile: true
 date: 2019-11-25
