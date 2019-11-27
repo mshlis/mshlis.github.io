@@ -1,5 +1,4 @@
 ---
-author: Michael Shliselberg
 author_profile: true
 date: 2019-10-14
 tags: [differentiable sampling, research]

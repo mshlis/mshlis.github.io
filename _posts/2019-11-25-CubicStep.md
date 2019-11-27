@@ -1,5 +1,4 @@
 ---
-author: Michael Shliselberg
 layout: single
 sidebar: true
 author_profile: true
