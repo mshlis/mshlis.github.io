@@ -6,7 +6,7 @@ comments: true
 excerpt: "In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis"
 mathjax: "true"
 permalink: /SuperMasks/
-title: "(Res) Super-Masks: Are They Good Initializations?"
+title: "[Idea] Super-Masks: Are They Good Initializations?"
 ---   
 
 A large advancement in understanding neural networks was the discovery of *lottery tickets*. Subgraphs of initializations that are correlated to better positioning in the loss manifold can be discovered through pruning of a trained network. This was investigated after a plethora of empirical pruning results, that on mulitple state-of-the-art models parameters can be reduced up to 90% with minimal reduction to accuracy. Investigating this further, some cool people at Uber discovered **Super-Masks**. Super-Masks are parameter masks that find a subgraph of the models initialization that performs relatively well. This means with no actual change to the initialization weights themselves, there exists a suitable model within. How AMAZING is that???  

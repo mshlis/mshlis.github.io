@@ -4,7 +4,7 @@ date: 2019-10-14
 tags: [differentiable sampling, research]
 comments: true
 excerpt: "I propose a novel sampling approach, leveraging an intermediate loss function to differentiate through a categorical draw. I compare this method to the commonly used Gumbel Softmax"
-title: "(Res) Intermediate Loss Sampling: A Differentiable Categorical Sampler"
+title: "[Idea] Intermediate Loss Sampling: A Differentiable Categorical Sampler"
 permalink: /ILSampling/
 mathjax: "true"
 ---

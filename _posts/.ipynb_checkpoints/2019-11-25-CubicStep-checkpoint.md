@@ -8,7 +8,7 @@ comments: true
 excerpt: "Current gradient based optimization ignores 0th order information. In this post I want to motivate others to try utilizing it."
 mathjax: "true"
 permalink: /CubicStep/
-title: "(Res) Cubic Step: We Have More Info, Lets Use It!"
+title: "[Idea] Cubic Step: We Have More Info, Lets Use It!"
 ---   
 
 Hello everyone! In this blog post I introduce an optimizer called Cubic Step where I fit a cubic poynomial to the current and previous step's losses and gradients to solve for the next update. My goal with this post is not to introduce some revolutionary optimizer but rather make aware the lack of the loss function's utility in modern gradient based optimization.   

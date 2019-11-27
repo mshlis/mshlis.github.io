@@ -5,7 +5,7 @@ tags: [hackathon, personal]
 comments: true
 excerpt: "This past weekend I had the pleasure of being a mentor at Hack Umass. In this post I discuss how the experience was along with common debugging ideas that are helpful in a variety of scenarios"
 permalink: /HackUmassMentor/
-title: "(Pers) Hack Umass Mentor: How to Debug"
+title: "[Pers] Hack Umass Mentor: How to Debug"
 ---
 
 This past weekend I had the pleasure of being a mentor at Hack Umass. Going to Umass as an ECE student, I saw the development of this event from a small hardware-only hackathon to what it is now. Now every year, me and a few friends drive up to the event to see the cool hacks and reconnect. This year though was my first as being a mentor  
