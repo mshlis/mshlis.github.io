@@ -11,9 +11,9 @@ permalink: /CubicStep/
 title: "[Idea] Cubic Step: We Have More Info, Lets Use It!"
 ---   
 
-Hello everyone! In this blog post I introduce an optimizer called Cubic Step where I fit a cubic poynomial to the current and previous step's losses and gradients to solve for the next update. My goal with this post is not to introduce some revolutionary optimizer but rather make aware the lack of the loss function's utility in modern gradient based optimization.   
+Hello everyone! In this blog post I introduce an optimizer called Cubic Step where I fit a cubic polynomial to the current and previous step's losses and gradients to solve for the next update. My goal with this post is not to introduce some revolutionary optimizer but rather make aware the lack of the loss function's utility in modern gradient based optimization.   
 
-zeroth order calculations add just as much information about the loss manifold as any other sample, **so why is it ignored?** This is because most differntiable optimization techniques use gradient based climbing schemes that only care about the local curvature. 
+Zeroth order calculations add just as much information about the loss manifold as any other sample, **so why is it ignored?** This is because most differntiable optimization techniques use gradient based climbing schemes that only care about the local curvature. 
 
 $$
 \begin{aligned}
@@ -62,7 +62,7 @@ $$\begin{pmatrix} \alpha_0 \\
                 l'(w_1) \end{pmatrix}$$  
                 
 
-Its pretty easy to see the inverse exists as long as $w_0 \neq w_1$. In my initial implementation I got lazy and used tensorflow's `tf.linalg.inv` but that lead to a stream of issues (It worked fine on CPU but on GPU It always caused the program to hang even though I checked that the eigenvalues were numerically stable with respect to floating point precision) so I did what we all had to freshman year of college $$\rightarrow$$ I did it by hand. The tedious excersize took around 5ish minutes. You get the inverse $Z$ as so...
+Its pretty easy to see the inverse exists as long as $$w_0 \neq w_1$$. In my initial implementation I got lazy and used tensorflow's `tf.linalg.inv` but that lead to a stream of issues (It worked fine on CPU but on GPU It always caused the program to hang even though I checked that the eigenvalues were numerically stable with respect to floating point precision) so I did what we all had to freshman year of college $$\rightarrow$$ I did it by hand. The tedious excersize took around 5ish minutes. You get the inverse $Z$ as so...
 
 $$
 \begin{aligned}
