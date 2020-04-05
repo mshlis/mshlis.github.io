@@ -1,6 +1,6 @@
 ---
-layout: splash
-permalink: /ml-blog/
+layout: home
+permalink: /chess-blog/
 author_profile: true
 header:
   image: "/images/other/intro_3.png"

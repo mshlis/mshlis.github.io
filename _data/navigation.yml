@@ -2,6 +2,8 @@
 main:
   - title: "ML Blog"
     url: /ml-blog/
+  - title: "Chess Blog"
+    url: /chess-blog/
   - title: "About Me"
     url: /about/
   #- title: "Hello World"
