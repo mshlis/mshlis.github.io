@@ -22,7 +22,10 @@
               {% if f.image_path contains "://" %}
                 "{{ f.image_path }}"
               {% else %}
-                "{{ f.image_path | relative_url }}"
+                {% if f.url %}
+                  "{{ f.image_path | relative_url }}"
+                {% else %}
+                  "{{ f.image_path | relative_url }}"
               {% endif %}
             alt="{% if f.alt %}{{ f.alt }}{% endif %}">
             {% if f.image_caption %}
