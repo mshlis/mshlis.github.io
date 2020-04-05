@@ -1,5 +1,6 @@
 ---
 layout: splash
+permalink: /ml-blog/
 author_profile: true
 header:
   image: "/images/other/intro_3.png"

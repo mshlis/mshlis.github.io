@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: "ML Blog"
+    url: /ml-blog/
   - title: "About Me"
     url: /about/
   #- title: "Hello World"
