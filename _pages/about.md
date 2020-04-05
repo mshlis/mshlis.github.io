@@ -3,7 +3,7 @@ title: "About"
 permalink: /about/
 ---
 
-I graduated from UMass Amherst with a bachelors in Computer Engineering and Applied Mathematics where I also completed REUs in a span of fields from logic debugging and eigensolvers all the way to computer vision techniqes within the domain of hyperspectral imageing. Currently, I work as a Machine Learning Researcher at Systems and Technology Research, a medium-sized defense contractor. There I am working on projects that include vision, language processing, and reinforcement learning. I enjoy working on small side projects in my free time and so a pal reccomended starting this up, so here I am.  
+I graduated from UMass Amherst with a bachelors in Computer Engineering and Applied Mathematics, where I also completed REUs in a span of fields from logic debugging and eigensolvers all the way to computer vision techniqes within the domain of hyperspectral imaging. Currently, I work as a Machine Learning Researcher at Systems and Technology Research, a medium-sized defense contractor. There I am working on projects that include vision, language processing, and reinforcement learning. I enjoy working on small side projects in my free time and so a pal recomended starting this up, so here I am.  
   
 <p align="center">
   <img src="/images/other/im_shaggy.png">
