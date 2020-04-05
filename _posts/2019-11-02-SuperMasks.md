@@ -1,7 +1,7 @@
 ---
 author_profile: true
 date: 2019-11-02
-tags: [super-masks, research]
+tags: [ml, super-masks, research]
 comments: true
 excerpt: "In this post I discuss a Super Masks and their potential as initializations, similar to the lottery ticket hypothesis"
 mathjax: "true"

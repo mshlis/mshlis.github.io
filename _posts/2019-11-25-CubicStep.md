@@ -3,7 +3,7 @@ layout: single
 sidebar: true
 author_profile: true
 date: 2019-11-25
-tags: [optimization, research]
+tags: [ml, optimization, research]
 comments: true
 excerpt: "Current gradient based optimization ignores 0th order information. In this post I want to motivate others to try utilizing it."
 mathjax: "true"

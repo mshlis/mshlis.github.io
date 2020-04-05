@@ -1,7 +1,7 @@
 ---
 author_profile: true
 date: 2019-10-06
-tags: [transformer, pointer network, fun]
+tags: [ml, transformer, pointer network, fun]
 comments: true
 excerpt: "ANNagram is a neural network to take a set of letters and output a possible word. I use a pointer network with a transformer backbone for this task. In the post I delve into both what each of those architectures are and why I chose them."
 permalink: /ANNagram/
